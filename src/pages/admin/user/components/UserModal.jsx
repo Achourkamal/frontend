@@ -38,7 +38,7 @@ const UserModal = ({ show, onHide, action, userData, onInputChange, onSubmit, is
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formUserPassword" className="mb-3">
+                    {/* <Form.Group controlId="formUserPassword" className="mb-3">
                         <Form.Label>Password</Form.Label>
                         <Form.Control
                             type="password"
@@ -54,7 +54,7 @@ const UserModal = ({ show, onHide, action, userData, onInputChange, onSubmit, is
                                 Leave blank to keep existing password
                             </Form.Text>
                         )}
-                    </Form.Group>
+                    </Form.Group> */}
 
                     <Form.Group controlId="formUserIsAdmin" className="mb-3">
                         <Form.Check

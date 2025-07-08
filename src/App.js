@@ -6,7 +6,8 @@ import ExamplesAdminPage from './pages/admin/example/Example.jsx';
 import './App.css';
 import CategoryAdminPage from './pages/admin/category/Category.jsx';
 import ProductAdminPage from './pages/admin/product/Product.jsx';
-import UserAdminPage from './pages/admin/user/User.jsx'; 
+import UserAdminPage from './pages/admin/user/User.jsx';
+import OrderAdminPage from './pages/admin/order/Order.jsx';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/admin/categories" element={<CategoryAdminPage />} />
         <Route path="/admin/products" element={<ProductAdminPage />} />
         <Route path="/admin/users" element={<UserAdminPage />} /> 
+        <Route path="/admin/orders" element={<OrderAdminPage />} />
 
         {/* Public route */}
         <Route path="*" element={<NotFoundPage />} />

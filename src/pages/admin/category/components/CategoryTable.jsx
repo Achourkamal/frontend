@@ -16,8 +16,8 @@ const CategoryTable = ({ categories, onEdit, onDelete }) => {
                 {categories && categories.length > 0 ? (
                     categories.map((category) => (
                         <tr key={category._id}>
-                            <td>{truncateText(category.name, 10)}</td>
-                            <td>{truncateText(category.description, 10)}</td>
+                            <td>{category.name}</td>
+                            <td>{category.description}</td>
                             <td>
                                 <Button
                                     variant="warning"

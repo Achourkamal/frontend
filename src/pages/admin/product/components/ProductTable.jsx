@@ -23,8 +23,8 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
                 {products && products.length > 0 ? (
                     products.map((product) => (
                         <tr key={product._id}>
-                            <td>{truncateText(product.name, 15)}</td>
-                            <td>{truncateText(product.description, 20)}</td>
+                            <td>{product.name}</td>
+                            <td>{product.description}</td>
                             <td>{product.price}</td>
                             <td>{product.stock}</td>
                             {/* Ici on utilise directement product.category.name */}

@@ -29,7 +29,6 @@ const User = () => {
     return (
         <div className="container mt-4">
             {error && <Alert variant="danger">{error}</Alert>}
-            {console.log("Errror", error)}
 
             <div className="d-flex justify-content-between align-items-center">
                 <h1>User List</h1>

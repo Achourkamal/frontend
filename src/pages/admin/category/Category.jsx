@@ -6,7 +6,6 @@ import Loader from '../../../components/loader/Loader.jsx';
 import CategoryModal from './components/CategoryModal.jsx';
 import CategoryTable from './components/CategoryTable.jsx';
 
-
 const Category = () => {
     const {
         categories,
@@ -16,30 +15,27 @@ const Category = () => {
         showModal,
         modalAction,
         getAllCategories,
-        getCategoryById,
-        createCategory,
-        updateCategory,
-        deleteCategory,
         handleShowModal,
         handleCloseModal,
         handleInputChange,
         handleSubmitForm,
         handleDeleteCategory
-    } = useCategory()
+    } = useCategory();
 
     useEffect(() => {
-        getAllCategories()
-    }, [])
+        getAllCategories();
+    }, []);
 
     return (
         <div className="container mt-4">
-            {error && <Alert variant="danger">{error}</Alert>}
+            {/* Global error outside modal if needed */}
+            {!showModal && error && <Alert variant="danger">{error}</Alert>}
 
             <div className='d-flex justify-content-between'>
                 <h1>Categories List</h1>
                 <OverlayTrigger
                     placement="top"
-                    overlay={<Tooltip id="create-tooltip">  Create a new Category </Tooltip>}  // Display "Create a new Example" when hovered
+                    overlay={<Tooltip id="create-tooltip">Create a new Category</Tooltip>}
                 >
                     <Button
                         variant="primary"
@@ -49,7 +45,6 @@ const Category = () => {
                         <CreateIcon />
                     </Button>
                 </OverlayTrigger>
-
             </div>
 
             {isLoading ? (
@@ -62,7 +57,6 @@ const Category = () => {
                         onDelete={handleDeleteCategory}
                     />
 
-                    {/* Render the Modal component */}
                     <CategoryModal
                         show={showModal}
                         onHide={handleCloseModal}
@@ -70,13 +64,13 @@ const Category = () => {
                         categoryData={categoryData}
                         onInputChange={handleInputChange}
                         onSubmit={handleSubmitForm}
-                        isLoading={isLoading} // Pass loading state to disable form during submission if needed
+                        isLoading={isLoading}
+                        error={error}
                     />
                 </>
             )}
-
         </div>
-    )
-}
+    );
+};
 
-export default Category
+export default Category;

@@ -1,8 +1,9 @@
-import { Modal, Button, Form, ButtonGroup } from 'react-bootstrap';
+import { Modal, Button, Form, ButtonGroup, Alert } from 'react-bootstrap';
 
-const CategoryModal = ({ show, onHide, action, categoryData, onInputChange, onSubmit, isLoading }) => {
+const CategoryModal = ({ show, onHide, action, categoryData, onInputChange, onSubmit, isLoading, error }) => {
     const modalTitle = action === 'create' ? 'Create Category' : 'Update Category';
     const submitButtonText = action === 'create' ? 'Create' : 'Update';
+
     return (
         <Modal show={show} onHide={onHide}>
             <Modal.Header closeButton>
@@ -14,7 +15,7 @@ const CategoryModal = ({ show, onHide, action, categoryData, onInputChange, onSu
                         <Form.Label>Name</Form.Label>
                         <Form.Control
                             type="text"
-                            name="name" // Important for handling input changes
+                            name="name"
                             placeholder="Enter name"
                             value={categoryData?.name}
                             onChange={onInputChange}
@@ -28,7 +29,7 @@ const CategoryModal = ({ show, onHide, action, categoryData, onInputChange, onSu
                         <Form.Control
                             as="textarea"
                             rows={3}
-                            name="description" // Important for handling input changes
+                            name="description"
                             placeholder="Enter description"
                             value={categoryData?.description}
                             onChange={onInputChange}
@@ -38,7 +39,7 @@ const CategoryModal = ({ show, onHide, action, categoryData, onInputChange, onSu
                     </Form.Group>
 
                     <ButtonGroup className="my-2 d-flex justify-content-end">
-                        <Button  className="me-2" variant="danger" onClick={onHide} disabled={isLoading}>
+                        <Button className="me-2" variant="danger" onClick={onHide} disabled={isLoading}>
                             Cancel
                         </Button>
                         <Button className="me-2" variant="primary" type="submit" disabled={isLoading}>
@@ -46,6 +47,8 @@ const CategoryModal = ({ show, onHide, action, categoryData, onInputChange, onSu
                         </Button>
                     </ButtonGroup>
                 </Form>
+
+                {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
             </Modal.Body>
         </Modal>
     );

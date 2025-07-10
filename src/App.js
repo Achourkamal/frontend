@@ -8,6 +8,7 @@ import CategoryAdminPage from './pages/admin/category/Category.jsx';
 import ProductAdminPage from './pages/admin/product/Product.jsx';
 import UserAdminPage from './pages/admin/user/User.jsx';
 import OrderAdminPage from './pages/admin/order/Order.jsx';
+import Login from './pages/login.js';
 
 function App() {
   return (
@@ -15,10 +16,14 @@ function App() {
       <Routes>
         <Route path="/" element={
           <PrivateRoute>
+            <Login />
+          </PrivateRoute>
+        }></Route>
+        <Route path="/admin/dashboard" element={
+          <PrivateRoute>
             <Layout />
           </PrivateRoute>
         }>
-          <Route path="/" element={<h1>Home Page</h1>} />
         </Route>
 
         {/* Admin route */}

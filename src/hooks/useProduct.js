@@ -133,9 +133,11 @@ const useProduct = () => {
         setError(null)
     }
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target
-        setProductData({ ...productData, [name]: value })
+     const handleInputChange = (e) => {
+        const { name, value, type } = e.target
+        const parsedValue =
+            type === "number" ? parseFloat(value) || 0 : value;
+        setProductData({ ...productData, [name]: parsedValue })
     }
 
     const handleSubmitForm = async () => {

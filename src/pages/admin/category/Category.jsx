@@ -28,8 +28,10 @@ const Category = () => {
 
     return (
         <div className="container mt-4">
-            {/* Global error outside modal if needed */}
-            {!showModal && error && <Alert variant="danger">{error}</Alert>}
+              
+                            {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
+            
+            {/* {!showModal && error && <Alert variant="danger">{error}</Alert>} */}
 
             <div className='d-flex justify-content-between'>
                 <h1>Categories List</h1>
@@ -65,7 +67,6 @@ const Category = () => {
                         onInputChange={handleInputChange}
                         onSubmit={handleSubmitForm}
                         isLoading={isLoading}
-                        error={error}
                     />
                 </>
             )}

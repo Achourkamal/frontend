@@ -102,7 +102,7 @@ const useCategory = () => {
         setShowModal(false);
         setCategoryData({ id: '', name: '', description: '' });
         setCategorySelected(null);
-        setError(null);
+
     };
 
     const handleInputChange = (e) => {

@@ -1,6 +1,6 @@
 import { Modal, Button, Form, ButtonGroup, Alert } from 'react-bootstrap';
 
-const CategoryModal = ({ show, onHide, action, categoryData, onInputChange, onSubmit, isLoading, error }) => {
+const CategoryModal = ({ show, onHide, action, categoryData, onInputChange, onSubmit, isLoading }) => {
     const modalTitle = action === 'create' ? 'Create Category' : 'Update Category';
     const submitButtonText = action === 'create' ? 'Create' : 'Update';
 
@@ -48,7 +48,6 @@ const CategoryModal = ({ show, onHide, action, categoryData, onInputChange, onSu
                     </ButtonGroup>
                 </Form>
 
-                {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
             </Modal.Body>
         </Modal>
     );

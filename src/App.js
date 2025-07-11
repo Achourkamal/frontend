@@ -8,7 +8,7 @@ import CategoryAdminPage from './pages/admin/category/Category.jsx';
 import ProductAdminPage from './pages/admin/product/Product.jsx';
 import UserAdminPage from './pages/admin/user/User.jsx';
 import OrderAdminPage from './pages/admin/order/Order.jsx';
-import Login from './pages/login.js';
+import Login from './pages/login.jsx';
 
 function App() {
   return (

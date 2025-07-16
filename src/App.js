@@ -1,14 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
 import Layout from "./components/layout/Layout.jsx";
-import PrivateRoute from './components/privateRoute/PrivateRoute.jsx';
 import NotFoundPage from './pages/customer/notFound/NotFound.jsx';
 import ExamplesAdminPage from './pages/admin/example/Example.jsx';
+import CategoriesAdminPage from './pages/admin/category/Category.jsx';
+import ProductsAdminPage from './pages/admin/product/Product.jsx';
+import UsersAdminPage from './pages/admin/user/User.jsx';
+import OrdersAdminPage from './pages/admin/order/Order.jsx';
+import Login from './pages/authentification/Login.jsx';
+import Signup from './pages/authentification/Signup.jsx';
 import './App.css';
-import CategoryAdminPage from './pages/admin/category/Category.jsx';
-import ProductAdminPage from './pages/admin/product/Product.jsx';
-import UserAdminPage from './pages/admin/user/User.jsx';
-import OrderAdminPage from './pages/admin/order/Order.jsx';
-import Login from './pages/login.jsx';
+import PrivateRoute from './components/privateRoute/PrivateRoute.jsx';
+
+
 
 function App() {
   return (
@@ -16,25 +19,24 @@ function App() {
       <Routes>
         <Route path="/" element={
           <PrivateRoute>
-            <Login />
-          </PrivateRoute>
-        }></Route>
-        <Route path="/admin/dashboard" element={
-          <PrivateRoute>
             <Layout />
           </PrivateRoute>
         }>
-        </Route>
+          
+        <Route path="/" element={<h1>Home Page</h1>} /></Route>
 
         {/* Admin route */}
         <Route path="/admin/examples" element={<ExamplesAdminPage />} />
-        <Route path="/admin/categories" element={<CategoryAdminPage />} />
-        <Route path="/admin/products" element={<ProductAdminPage />} />
-        <Route path="/admin/users" element={<UserAdminPage />} /> 
-        <Route path="/admin/orders" element={<OrderAdminPage />} />
+        <Route path="/admin/categories" element={<CategoriesAdminPage />} />
+        <Route path="/admin/products" element={<ProductsAdminPage />} />
+        <Route path="/admin/users" element={<UsersAdminPage />} />
+        <Route path="/admin/orders" element={<OrdersAdminPage />} />
+        
 
         {/* Public route */}
         <Route path="*" element={<NotFoundPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
     </div>
   );

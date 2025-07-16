@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
   Navbar, Nav, Container, Alert, Button,
@@ -7,22 +7,15 @@ import {
 } from 'react-bootstrap';
 import { LogoutIcon, ProfileIcon, ShopIcon } from "../../assets/icons/Icons.jsx";
 import { truncateText } from '../../assets/utils/helpers.js';
-
+import { logout } from '../../redux/auth/auth.slice.js';
 
 const Menu = () => {
+  const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const currentUser = {
-    name: "aziz",
-    isAdmin: true
-  };
-
-  const isAdmin = currentUser.isAdmin;
-
   const cart = useSelector((state) => state.cart);
 
   const handleShow = () => setShowModal(true);
@@ -30,14 +23,14 @@ const Menu = () => {
 
   const handleLogout = async () => {
     try {
-      const result = await dispatch().unwrap();
-      if (result) {
-        navigate("/login");
-      }
+      dispatch(logout())
+      // navigate("/login");
     } catch {
       setError("Logout failed. Please try again.");
     }
   };
+
+  const isAdmin = currentUser?.isAdmin;
 
   return (
     <div>
@@ -46,63 +39,55 @@ const Menu = () => {
           <Navbar.Brand href="#">E-commerce</Navbar.Brand>
 
           <Nav>
-             {isAdmin ? (
-                  <>
-           <Nav.Link onClick={() => navigate('/admin/examples')}>Examples</Nav.Link>
-           <Nav.Link onClick={() => navigate('/admin/categories')}>Categories</Nav.Link>
-           <Nav.Link onClick={() => navigate('/admin/products')}>Products</Nav.Link>
-           <Nav.Link onClick={() => navigate('/admin/users')}>Users</Nav.Link>
-           <Nav.Link onClick={() => navigate('/admin/orders')}>Orders</Nav.Link>
+            {isAdmin ? (
+              <>
+                <Nav.Link onClick={() => navigate('/admin/examples')}>Examples</Nav.Link>
+                <Nav.Link onClick={() => navigate('/admin/categories')}>Categories</Nav.Link>
+                <Nav.Link onClick={() => navigate('/admin/products')}>Products</Nav.Link>
+                <Nav.Link onClick={() => navigate('/admin/users')}>Users</Nav.Link>
+                <Nav.Link onClick={() => navigate('/admin/orders')}>Orders</Nav.Link>
               </>
             ) : (
-             <>
-              <Nav.Link onClick={() => navigate('/examples')}>Examples</Nav.Link>
-              <Nav.Link onClick={() => navigate('/categories')}>Categories</Nav.Link>
-              <Nav.Link onClick={() => navigate('/products')}>Products</Nav.Link>
-              <Nav.Link onClick={() => navigate('/users')}>Users</Nav.Link>
-              <Nav.Link onClick={() => navigate('/orders')}>Orders</Nav.Link>
-             </>
-             )}
-              </Nav>
-
+              <>
+                <Nav.Link onClick={() => navigate('/examples')}>Examples</Nav.Link>
+                <Nav.Link onClick={() => navigate('/categories')}>Categories</Nav.Link>
+                <Nav.Link onClick={() => navigate('/products')}>Products</Nav.Link>
+                <Nav.Link onClick={() => navigate('/users')}>Users</Nav.Link>
+                <Nav.Link onClick={() => navigate('/orders')}>Orders</Nav.Link>
+              </>
+            )}
+          </Nav>
 
           <Nav>
             <Nav.Link onClick={() => navigate('/profile')} className="d-flex align-items-center">
               <OverlayTrigger
                 placement="bottom"
-                overlay={<Tooltip>{currentUser?.name}</Tooltip>}
+                overlay={<Tooltip>{currentUser?.name || "Utilisateur"}</Tooltip>}
               >
                 <div>
                   <span className="text-white me-2">
-                    {truncateText(currentUser?.name, 5)}
+                    {currentUser?.name || "User"}
                   </span>
                   <ProfileIcon />
                 </div>
               </OverlayTrigger>
             </Nav.Link>
-            {
-              !isAdmin && <Nav.Link onClick={() => navigate('/shop')} className="d-flex align-items-center">
-                <OverlayTrigger
-                  placement="bottom"
-                  overlay={<Tooltip>Shop</Tooltip>}
-                >
+
+            {!isAdmin && (
+              <Nav.Link onClick={() => navigate('/shop')} className="d-flex align-items-center">
+                <OverlayTrigger placement="bottom" overlay={<Tooltip>Shop</Tooltip>}>
                   <div>
                     <ShopIcon />
-                    <Badge bg="success">0</Badge>
-                    {/* bech tetbadel */}
+                    <Badge bg="success">{cart?.items?.length || 0}</Badge>
                   </div>
                 </OverlayTrigger>
               </Nav.Link>
-            }
-
+            )}
           </Nav>
 
           <Nav>
             <Nav.Link onClick={handleShow}>
-              <OverlayTrigger
-                placement="bottom"
-                overlay={<Tooltip>Logout</Tooltip>}
-              >
+              <OverlayTrigger placement="bottom" overlay={<Tooltip>Logout</Tooltip>}>
                 <Button
                   variant="outline-light"
                   style={{ width: '35px', height: '40px' }}
@@ -125,10 +110,10 @@ const Menu = () => {
           Are you sure you want to log out ?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={()=>handleClose()}>
             Cancel
           </Button>
-          <Button variant="danger" onClick={handleLogout}>
+          <Button variant="danger" onClick={()=>handleLogout()}>
             Confirm
           </Button>
         </Modal.Footer>

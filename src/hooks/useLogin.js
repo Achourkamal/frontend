@@ -1,42 +1,55 @@
-// hooks/useLogin.js
-import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { login, signup, logout, resetAuthState } from "../redux/auth/auth.slice";
 
-const BASEURL = process.env.REACT_APP_BASEURL;
+const useLogin = () => {
+  const dispatch = useDispatch();
 
-export const useLogin = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const { user, token, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
 
-  const handleLogin = async () => {
-    setIsLoading(true);
-    setError(null);
-
+  // 🔐 Login
+  const handleLogin = async (email, password) => {
     try {
-      const response = await axios.post(`${BASEURL}/auth/login`, {
-        email,
-        password,
-      });
-      localStorage.setItem('userConnectedData', JSON.stringify(response.data));
-      navigate('/admin/dashboard');
-    } catch (err) {
-      setError(err.response?.data?.message || 'Erreur de connexion');
-    } finally {
-      setIsLoading(false);
+      await dispatch(login({ email, password })).unwrap();
+    } catch (error) {
+      console.error("Erreur de connexion :", error);
+      console.log("💬 Message:", error.response.data);
+      throw error;
     }
   };
 
+  // 📝 Signup
+  const handleSignup = async (formData) => {
+    try {
+      await dispatch(signup(formData)).unwrap();
+    } catch (error) {
+      console.error("Erreur d'inscription :", error);
+      console.log("💬 Message:", error.response.data);
+      throw error;
+    }
+  };
+
+  // 🚪 Logout
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  // 🔄 Réinitialiser l’état d'erreur/succès
+  const reset = () => dispatch(resetAuthState());
+
   return {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    error,
+    user,
+    token,
     isLoading,
-    handleLogin,
+    isError,
+    isSuccess,
+    message,
+    login: handleLogin,
+    signup: handleSignup,
+    logout: handleLogout,
+    reset,
   };
 };
+
+export default useLogin;

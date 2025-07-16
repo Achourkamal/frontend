@@ -10,8 +10,6 @@ const useExamples = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
 
-
-
     const [showModal, setShowModal] = useState(false);
 
     const [modalAction, setModalAction] = useState('create');

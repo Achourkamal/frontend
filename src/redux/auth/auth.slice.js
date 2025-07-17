@@ -17,7 +17,7 @@ const initialState = {
 export const signup = createAsyncThunk("/signup", async (formData, thunkAPI) => {
   try {
     const data = await authService.signup(formData);
-    localStorage.setItem("user", JSON.stringify(data.newUser));
+    localStorage.setItem("user", JSON.stringify(data.user));
     localStorage.setItem("token", data.token);
     return data;
   } catch (error) {
